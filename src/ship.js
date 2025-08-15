@@ -1,28 +1,30 @@
 class Ship {
-    constructor(size){
-        this.size = size;
-        this.hits = 0;
+  constructor(length) {
+    if (!Number.isInteger(length) || length <= 0) {
+      throw new Error('Ship length must be a positive integer');
     }
+    this._length = length;
+    this._hits = 0;
+  }
 
-    getSize(){
-        return this.size;
-    }
+  getSize() {
+    return this._length;
+  }
 
-    getHits(){
-        return this.hits;
-    }
+  getHits() {
+    return this._hits;
+  }
 
-    hit(){
-        this.hits++;
+  hit() {
+    // clamp so hits never exceed length
+    if (this._hits < this._length) {
+      this._hits += 1;
     }
-    
-    isSunk(){
-        if(this.hits === this.size){
-            return true;
-        }
+  }
 
-        return false;
-    }
+  isSunk() {
+    return this._hits >= this._length;
+  }
 }
 
 module.exports = Ship;
