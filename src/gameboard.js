@@ -48,6 +48,7 @@ class Gameboard{
         for (const [cx, cy] of cells) {
             this.grid[cx][cy] = ship;
         }
+        this.ships.push(ship);
         return ship;
     };
 
@@ -59,10 +60,17 @@ class Gameboard{
         const selectedGrid = this.grid[x][y];
         if(selectedGrid !== null){
             selectedGrid.hit();
+            this.removeShip(selectedGrid);
             return true;
         }
         this.grid[x][y] = 'miss';
         return false;
+    }
+
+    removeShip(ship) {
+        if (!ship.isSunk()) return;
+        const idx = this.ships.indexOf(ship);
+        if (idx !== -1) this.ships.splice(idx, 1);
     }
 }
 
